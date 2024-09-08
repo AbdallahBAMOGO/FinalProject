@@ -1,0 +1,35 @@
+<h1>Liste des laboratoires</h1>
+
+<div style="display: flex;">
+  <!-- Partie 1 : Liste des laboratoires -->
+  <div style="width: 50%;">
+    <ul>
+      <% @laboratories.each do |laboratory| %>
+        <li>
+          <%= link_to laboratory.name, patient_exams_path(laboratory_id: laboratory.id) %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <!-- Partie 2 : Google Map pour localiser les laboratoires -->
+  <div id="map" style="width: 50%; height: 500px;"></div>
+</div>
+
+<script>
+  function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 12,
+      center: { lat: -34.397, lng: 150.644 } // Définit une position par défaut
+    });
+
+    <% @laboratories.each do |laboratory| %>
+      var marker = new google.maps.Marker({
+        position: { lat: <%= laboratory.latitude %>, lng: <%= laboratory.longitude %> },
+        map: map,
+        title: "<%= laboratory.name %>"
+      });
+    <% end %>
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>

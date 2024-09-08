@@ -1,0 +1,69 @@
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
+#
+# It's strongly recommended that you check this file into your version control system.
+
+ActiveRecord::Schema[7.1].define(version: 2024_09_08_174147) do
+  create_table "appointments", force: :cascade do |t|
+    t.integer "exam_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exam_id"], name: "index_appointments_on_exam_id"
+    t.index ["user_id"], name: "index_appointments_on_user_id"
+  end
+
+  create_table "exams", force: :cascade do |t|
+    t.string "name"
+    t.string "precaution"
+    t.string "conditionPrea"
+    t.text "description"
+    t.decimal "price"
+    t.integer "laboratory_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["laboratory_id"], name: "index_exams_on_laboratory_id"
+  end
+
+  create_table "laboratories", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "city"
+    t.string "email"
+    t.string "latitude"
+    t.string "longitude"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_laboratories_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "user_type"
+    t.string "contact"
+    t.string "name"
+    t.string "password_digest"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  add_foreign_key "appointments", "exams"
+  add_foreign_key "appointments", "users"
+  add_foreign_key "exams", "laboratories"
+  add_foreign_key "laboratories", "users"
+end

@@ -1,0 +1,13 @@
+<h1>Gérer mes laboratoires</h1>
+
+<%= link_to 'Créer un nouveau laboratoire', new_laboratory_path, class: 'btn btn-primary' %>
+
+<ul>
+  <% @laboratories.each do |laboratory| %>
+    <li>
+      <%= link_to laboratory.name, laboratory_path(laboratory) %> |
+      <%= link_to 'Modifier', edit_laboratory_path(laboratory) %> |
+      <%= link_to 'Supprimer', laboratory, method: :delete, data: { confirm: 'Êtes-vous sûr ?' } %>
+    </li>
+  <% end %>
+</ul>

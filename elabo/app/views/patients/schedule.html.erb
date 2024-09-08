@@ -1,0 +1,9 @@
+<h1>Mes rendez-vous</h1>
+
+<ul>
+  <% @appointments.each do |appointment| %>
+    <li>
+      Examen : <%= appointment.exam.name %> à <%= appointment.laboratory.name %> le <%= appointment.date %>
+    </li>
+  <% end %>
+</ul>

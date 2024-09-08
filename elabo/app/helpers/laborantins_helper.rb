@@ -1,0 +1,2 @@
+module LaborantinsHelper
+end
