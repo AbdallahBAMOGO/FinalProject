@@ -20,6 +20,6 @@ class User < ApplicationRecord
   def patient?
     self.user_type == 'patient'
   end
-
+  has_many :appointments, dependent: :destroy
   has_many :laboratories
 end

@@ -3,6 +3,8 @@
   <head>
     <title>Elabo</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -40,14 +42,26 @@
     <!-- Medipro CSS -->
     <%= stylesheet_link_tag 'frontend/normalize', 'data-turbo-track': 'reload' %>
     <%= stylesheet_link_tag 'frontend/responsive', 'data-turbo-track': 'reload' %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <!-- Inclure Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<!-- Inclure Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+<!-- FullCalendar CSS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.css" rel="stylesheet">
+
+<!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.js"></script>
+
+<!-- jQuery (nécessaire pour FullCalendar) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 
     <!-- jquery Min JS -->
   <%= javascript_include_tag 'frontend/jquery.min', 'data-turbo-track': 'reload' %>
@@ -83,7 +97,7 @@
         <div class="row">
           <div class="col-lg-3 col-md-3 col-12">
             <div class="logo">
-              <%= link_to image_tag('frontend/img/logo.png', alt: 'Logo'), root_path %>
+              <%= link_to image_tag('frontend/img/logos.png', alt: 'Logo'), root_path %>
             </div>
           </div>
           <div class="col-lg-9 col-md-9 col-12">
@@ -91,28 +105,27 @@
               <div class="main-menu">
                 <nav class="navigation nav">
                   <ul class="nav menu">
+                    <li class="nav-item me-3 nav-link <%= 'active' if current_page?(root_path) %>"><%= link_to 'Accueil', root_path %></li>
                     <% if user_signed_in? %>
                       <!-- Options de menu pour un laborantin -->
                       <% if current_user.laborantin? %>
-                        <li class="nav-item me-3 <%= 'active' if current_page?(manage_laboratories_path) %>">
-                          <%= link_to 'Gérer mes laboratoires', manage_laboratories_path %>
-                        </li>
+                          <li class="nav-item me-3 <%= 'active' if current_page?(laborantin_dashboard_path) %>">
+                          <%= link_to 'Tableau de Bord', laborantin_dashboard_path %>
+                          </li>
+                          <li class="nav-item me-3 <%= 'active' if current_page?(laboratories_path) %>">
+                          <%= link_to 'Gérer mes laboratoires', laboratories_path %>
+                          </li>
                       <!-- Options de menu pour un patient -->
-                      <% elsif current_user.patient? %>
-                      <li class="nav-item me-3 nav-link <%= 'active' if current_page?(root_path) %>"><%= link_to 'Accueil', root_path %></li>
-                      <li class="nav-item me-3 nav-link <%= 'active' if current_page?(laboratories_path) %>"><%= link_to 'Laboratoires', laboratories_path %></li>
-                      <li class="nav-item me-3 nav-link <%= 'active' if current_page?(contact_path) %>"><%= link_to 'Contacter Nous', contact_path %></li>
-                        <li class="nav-item me-3 <%= 'active' if current_page?(patient_dashboard_path) %>">
-                          <%= link_to 'Mes rendez-vous', patient_dashboard_path %>
-                        </li>
-                        <li class="nav-item me-3 <%= 'active' if current_page?(laboratories_path) %>">
-                          <%= link_to 'Rechercher des examens', laboratories_path %>
-                        </li>
-                      <% end %>
+                        <% elsif current_user.patient? %>
+                          <li class="nav-item me-3 nav-link <%= 'active' if current_page?(patient_dashboard_path ) %>"><%= link_to 'Laboratoires', patient_dashboard_path %></li>
+                            <li class="nav-item me-3 <%= 'active' if current_page?(patient_schedule_path) %>">
+                              <%= link_to 'Mes rendez-vous', patient_schedule_path%>
+                            </li>
+                          <% end %>
 
                       <!-- Profil utilisateur et déconnexion -->
                       <li class="nav-item me-3"><%= link_to current_user.name, profile_path(current_user) %></li>
-                      <li class="nav-item me-3"><%= link_to 'Se déconnecter', destroy_user_session_path, class: 'btn-md' %></li>
+                      <li class="nav-item me-3"><%= link_to 'Se déconnecter', destroy_user_session_path, method: :delete, class: 'btn-md' %></li>
 
                     <% else %>
                       <!-- Si l'utilisateur n'est pas connecté -->
@@ -121,6 +134,26 @@
                     <% end %>
                   </ul>
                 </nav>
+
+                <div class="container">
+                  <% if notice.present? %>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      <%= notice %>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                  <% end %>
+
+                  <% if alert.present? %>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <%= alert %>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                  <% end %>
+                </div>
 
               </div>
             </div>
@@ -144,10 +177,10 @@
     <div class="footer-top">
       <div class="container">
         <div class="row">
-          <div class="col-lg-3 col-md-6 col-12">
+          <div class="col-lg-4 col-md-6 col-12">
             <div class="single-footer">
-              <h2>About Us</h2>
-              <p>Lorem ipsum dolor sit am consectetur adipisicing elit do eiusmod tempor incididunt ut labore dolore magna.</p>
+              <h2>A propos de nous</h2>
+              <p>Nous sommes une nouvelle startup qui propose des solutions adaptees a vos besoins</p>
               <!-- Social -->
               <ul class="social">
                 <li><a href="#"><i class="icofont-facebook"></i></a></li>
@@ -159,46 +192,19 @@
               <!-- End Social -->
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-12">
+          <div class="col-lg-4 col-md-6 col-12">
             <div class="single-footer f-link">
               <h2>Quick Links</h2>
-              <div class="row">
-                <div class="col-lg-6 col-md-6 col-12">
                   <ul>
                     <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
                     <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
-                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
-                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Our Cases</a></li>
-                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Other Links</a></li>
                   </ul>
-                </div>
-                <div class="col-lg-6 col-md-6 col-12">
-                  <ul>
-                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Consuling</a></li>
-                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Finance</a></li>
-                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Testimonials</a></li>
-                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>FAQ</a></li>
-                    <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
-                  </ul>
-                </div>
-              </div>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-12">
-            <div class="single-footer">
-              <h2>Open Hours</h2>
-              <p>Lorem ipsum dolor sit ame consectetur adipisicing elit do eiusmod tempor incididunt.</p>
-              <ul class="time-sidual">
-                <li class="day">Monday - Fridayp <span>8.00-20.00</span></li>
-                <li class="day">Saturday <span>9.00-18.30</span></li>
-                <li class="day">Monday - Thusday <span>9.00-15.00</span></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-12">
+          <div class="col-lg-4 col-md-6 col-12">
             <div class="single-footer">
               <h2>Newsletter</h2>
-              <p>subscribe to our newsletter to get allour news in your inbox.. Lorem ipsum dolor sit amet, consectetur adipisicing elit,</p>
+              <p>Inscrivez vous a notre newsletter pour rester informer.</p>
               <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
                 <input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
                   onblur="this.placeholder = 'Your email address'" required="" type="email">
@@ -216,7 +222,7 @@
         <div class="row">
           <div class="col-lg-12 col-md-12 col-12">
             <div class="copyright-content">
-              <p>© Copyright 2018  |  All Rights Reserved by <a href="https://www.wpthemesgrid.com" target="_blank">wpthemesgrid.com</a> </p>
+              <p>© Copyright 2024  |  All Rights Reserved by <a href="https://www.etp4a.com" target="_blank">Etp4A Student</a> </p>
             </div>
           </div>
         </div>

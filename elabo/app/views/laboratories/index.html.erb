@@ -1,0 +1,26 @@
+<<div class="container">
+  <h1>Liste des Laboratoires</h1>
+
+  <div class="mb-3">
+    <a href="<%= new_laboratory_path %>" class="btn btn-primary">Ajouter un Nouveau Laboratoire</a>
+  </div>
+
+  <div class="row">
+    <% @laboratories.each do | laboratory| %>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title"><%= laboratory.name %></h5>
+            <p class="card-text">ID: <%= laboratory.id %></p>
+            <div class="d-flex justify-content-between">
+              <%= link_to 'Voir', laboratory_path(laboratory), class: 'btn btn-info' %>
+              <%= link_to 'Modifier', edit_laboratory_path(laboratory), class: 'btn btn-warning' %>
+              <%= link_to 'Supprimer', laboratory_path(laboratory), method: :delete, data: { confirm: 'Êtes-vous sûr de vouloir supprimer ce laboratoire ?' }, class: 'btn btn-danger' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+</div>

@@ -1,0 +1,38 @@
+<div class="container">
+  <h1>Liste des laboratoires</h1>
+
+  <div class="row">
+    <!-- Liste des laboratoires -->
+    <div class="col-md-6">
+      <h2>Laboratoires disponibles</h2>
+      <ul>
+        <% @laboratories.each do |laboratory| %>
+          <li>
+            <%= link_to laboratory.name, patient_laboratory_exams_path(laboratory) %> -
+            <%= laboratory.city %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <!-- Carte Leaflet -->
+    <div class="col-md-6">
+      <h2>Carte des laboratoires</h2>
+      <div id="map" style="width: 100%; height: 500px;"></div>
+    </div>
+  </div>
+
+  <script>
+    var map = L.map('map').setView([14.692, -17.446], 13); // Position initiale (ex: Dakar)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    <% @laboratories.each do |laboratory| %>
+      L.marker([<%= laboratory.latitude %>, <%= laboratory.longitude %>])
+        .addTo(map)
+        .bindPopup("<b><%= laboratory.name %></b><br /><%= link_to('Voir les examens', patient_laboratory_exams_path(laboratory)) %>");
+    <% end %>
+  </script>
+
+</div>

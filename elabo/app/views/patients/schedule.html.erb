@@ -1,9 +1,49 @@
-<h1>Mes rendez-vous</h1>
+<div class="container">
+  <h1>Mes rendez-vous</h1>
 
-<ul>
-  <% @appointments.each do |appointment| %>
-    <li>
-      Examen : <%= appointment.exam.name %> à <%= appointment.laboratory.name %> le <%= appointment.date %>
-    </li>
-  <% end %>
-</ul>
+  <!-- Div pour le calendrier -->
+  <div id="calendar"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',  // Vue par défaut (mois)
+        events: [
+          <% @appointments.each do |appointment| %>
+            {
+              title: '<%= appointment.exam.name.truncate(20) %>:<%= appointment.status %>',
+              start: '<%= appointment.date.strftime('%Y-%m-%dT%H:%M:%S') %>',
+              url: '<%= patient_schedule_path %>',
+              extendedProps: {
+                description: '<%= appointment.status %>: <%= appointment.exam.name %> à <%= appointment.exam.laboratory.name%>' // Utiliser extendedProps pour stocker la description
+              }
+            },
+          <% end %>
+        ],
+        eventClick: function(info) {
+          info.jsEvent.preventDefault(); // Empêche l'ouverture du lien par défaut
+
+          // Affiche la description dans une alerte
+          alert(info.event.extendedProps.description);
+
+          if (info.event.url) {
+            window.location.href = info.event.url;  // Redirige vers la page du laboratoire
+          }
+        }
+      });
+
+      calendar.render();  // Rend le calendrier dans le DOM
+    });
+  </script>
+
+  <style>
+    .fc-event {
+      white-space: nowrap; /* Empêche le passage à la ligne */
+      overflow: hidden;    /* Cache le texte qui déborde */
+      text-overflow: ellipsis; /* Ajoute "..." pour le texte qui déborde */
+      max-width: 150px;   /* Limite la largeur de l'événement */
+    }
+  </style>
+</div>

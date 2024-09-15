@@ -1,0 +1,49 @@
+<div class="container">
+  <h1>Modifier l'Examen</h1>
+
+  <div class="card">
+    <div class="card-body">
+      <%= form_with model: @exam, url: laboratory_exam_path(@laboratory, @exam), method: :patch do |form| %>
+        <% if @exam.errors.any? %>
+          <div class="alert alert-danger">
+            <h4>Erreurs :</h4>
+            <ul>
+              <% @exam.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="form-group">
+          <%= form.label :nom, 'Nom de l\'Examen' %>
+          <%= form.text_field :name, class: 'form-control', value: @exam.name %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :description, 'Description' %>
+          <%= form.text_area :description, class: 'form-control', value: @exam.description %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :conditionPrealable, 'Condition Préalable' %>
+          <%= form.text_field :conditionPrea, class: 'form-control', value: @exam.conditionPrea %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :precaution, 'Précautions' %>
+          <%= form.text_area :precaution, class: 'form-control', value: @exam.precaution %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :montant, 'Montant' %>
+          <%= form.number_field :price, class: 'form-control', value: @exam.price %>
+        </div>
+
+        <div class="mt-4">
+          <%= form.submit 'Mettre à jour', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

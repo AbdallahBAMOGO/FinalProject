@@ -1,0 +1,12 @@
+<div class="container">
+      <p>Statut du rendez-vous : <%= @appointment.status %></p>
+
+    <% if @appointment.pending? %>
+      <%= link_to 'Confirmer ce rendez-vous', confirm_appointment_path(@appointment), method: :patch, class: 'btn btn-primary' %>
+      <%= link_to 'Annuler ce rendez-vous', cancel_appointment_path(@appointment), method: :patch, class: 'btn btn-danger' %>
+    <% elsif @appointment.confirmed? %>
+      <p>Ce rendez-vous est confirmé.</p>
+    <% elsif @appointment.cancelled? %>
+      <p>Ce rendez-vous a été annulé.</p>
+    <% end %>
+</div>

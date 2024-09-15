@@ -1,35 +1,41 @@
-<h1>Liste des laboratoires</h1>
 
-<div style="display: flex;">
-  <!-- Partie 1 : Liste des laboratoires -->
-  <div style="width: 50%;">
-    <ul>
-      <% @laboratories.each do |laboratory| %>
-        <li>
-          <%= link_to laboratory.name, patient_exams_path(laboratory_id: laboratory.id) %>
-        </li>
-      <% end %>
-    </ul>
+  <div class="container">
+    <h1>Laboratoires disponibles</h1>
+    <div class="row">
+      <div class="col-md-6 col-lg-6">
+        <h2>Liste des laboratoires</h2>
+        <ul>
+          <% @laboratories.each do |laboratory| %>
+            <li>
+              <%= link_to laboratory.name, patient_exams_path(laboratory_id: laboratory.id) %> -
+              <%= laboratory.city %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="col-md-6 col-lg-6">
+        <h2>Carte des laboratoires</h2>
+        <div id="map" style="width: 100%; height: 500px;"></div>
+      </div>
+    </div>
   </div>
 
-  <!-- Partie 2 : Google Map pour localiser les laboratoires -->
-  <div id="map" style="width: 50%; height: 500px;"></div>
-</div>
+  <script>
+    // Initialisation de la carte centrée sur Dakar (position par défaut)
+    var map = L.map('map').setView([14.692, -17.446], 13); // Dakar (latitude, longitude)
 
-<script>
-  function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 12,
-      center: { lat: -34.397, lng: 150.644 } // Définit une position par défaut
-    });
+    // Charger les tuiles OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
+    // Ajouter des marqueurs pour chaque laboratoire
     <% @laboratories.each do |laboratory| %>
-      var marker = new google.maps.Marker({
-        position: { lat: <%= laboratory.latitude %>, lng: <%= laboratory.longitude %> },
-        map: map,
-        title: "<%= laboratory.name %>"
-      });
+      L.marker([<%= laboratory.latitude %>, <%= laboratory.longitude %>])
+        .addTo(map)
+        .bindPopup("<b><%= laboratory.name %></b><br /><%= laboratory.city %><br /><a href='<%= patient_exams_path(laboratory_id: laboratory.id) %>'>Voir plus</a>");
     <% end %>
-  }
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
+  </script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>

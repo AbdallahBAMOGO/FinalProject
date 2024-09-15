@@ -1,0 +1,25 @@
+<div class="container">
+  <%= form_with(model: @appointment, url: laboratory_exam_appointments_path(@laboratory, @exam), local: true) do |form| %>
+      <% if @appointment.errors.any? %>
+      <div class="alert alert-danger">
+        <h4>Erreurs :</h4>
+        <ul>
+          <% @appointment.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+      <% end %>
+
+    <div class="form-group my-5">
+      <%= form.label :date, "Date et Heure" %>
+      <%= form.datetime_local_field :date, class: 'form-control', placeholder: 'YYYY-MM-DD HH:MM' %>
+    </div>
+    <!-- Champ caché pour le statut -->
+    <%= form.hidden_field :status, value: 'pending' %>
+
+    <div class="form-group my-5">
+      <%= form.submit 'Réserver', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

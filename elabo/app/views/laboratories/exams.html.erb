@@ -1,0 +1,17 @@
+<h1>Examens pour le laboratoire <%= @laboratory.name %></h1>
+
+<p>
+  <%= link_to 'Retour à la liste des laboratoires', laboratories_path, class: 'btn btn-secondary' %>
+</p>
+
+<ul class="list-group">
+  <% @exams.each do |exam| %>
+    <li class="list-group-item">
+      <strong><%= exam.name %></strong> - <%= number_to_currency(exam.price) %>
+      <p><%= exam.description %></p>
+
+      <!-- Lien pour voir les détails du laboratoire associé -->
+      <%= link_to 'Voir le laboratoire associé', laboratory_path(@laboratory), class: 'btn btn-primary btn-sm' %>
+    </li>
+  <% end %>
+</ul>

@@ -1,0 +1,11 @@
+<h1>Mes rendez-vous</h1>
+
+<ul>
+  <% @appointments.each do |appointment| %>
+    <li>
+      Examen : <%= appointment.exam.name %> -
+      Laboratoire : <%= appointment.exam.laboratory.name %> -
+      Date : <%= appointment.date.strftime('%d %B %Y, %H:%M') %>
+    </li>
+  <% end %>
+</ul>

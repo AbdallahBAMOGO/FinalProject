@@ -1,0 +1,42 @@
+<div class="container">
+  <h1>Détails de l'Examen</h1>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title"><%= @exam.name %></h5>
+      <p class="card-text"><strong>Description:</strong> <%= @exam.description %></p>
+      <p class="card-text"><strong>Condition Préalable:</strong> <%= @exam.conditionPrea %></p>
+      <p class="card-text"><strong>Précautions:</strong> <%= @exam.precaution %></p>
+      <p class="card-text"><strong>Montant:</strong> <%= @exam.price %> FCFA</p>
+
+      <div class="mt-4">
+        <h6>Réservations</h6>
+        <div class="row">
+          <% @exam.appointments.each do |reservation| %>
+            <div class="card mb-2 col-lg-4 col-md-6">
+              <div class="card-body">
+                <p><strong>Nom du patient:</strong> <%= reservation.user.name %></p>
+                <p><strong>Email du patient:</strong> <%= reservation.user.email %></p>
+                <p><strong>Reservation pour le:</strong> <%= reservation.date %></p>  <!-- Remplacez par la propriété correcte -->
+                <p><strong>Status:</strong> <%= case reservation.status
+                      when 'confirmed'
+                        'Confirmée'
+                      when 'pending'
+                        'En attente'
+                      when 'cancelled'
+                        'Rejetée'
+                      else
+                        'Statut inconnu'
+                    end %></p>
+                <%= link_to 'Confirmer', confirm_laboratory_exam_appointment_path(@laboratory, @exam, reservation), method: :patch, class: 'btn btn-success btn-sm' %>
+                <%= link_to 'Annuler', reject_laboratory_exam_appointment_path(@laboratory, @exam, reservation), method: :patch, class: 'btn btn-danger btn-sm' %>
+
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

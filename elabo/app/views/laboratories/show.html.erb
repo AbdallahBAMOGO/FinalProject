@@ -1,0 +1,50 @@
+<div class="container">
+  <h1>Détails du Laboratoire</h1>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title"><%= @laboratory.name %></h5>
+      <p class="card-text"><strong>ID:</strong> <%= @laboratory.id %></p>
+      <p class="card-text"><strong>Adresse:</strong> <%= @laboratory.address %></p>
+      <p class="card-text"><strong>Email:</strong> <%= @laboratory.email %></p>
+
+      <div class="mt-4">
+        <%= link_to 'Retour à la liste', laboratories_path, class: 'btn btn-secondary' %>
+        <%= link_to 'Modifier', edit_laboratory_path(@laboratory), class: 'btn btn-warning' %>
+        <%= link_to 'Supprimer', laboratory_path(@laboratory), method: :delete, data: { confirm: 'Êtes-vous sûr de vouloir supprimer ce laboratoire ?' }, class: 'btn btn-danger' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Examens Associés</h5>
+
+      <div class="mb-3">
+        <a href="<%= new_laboratory_exam_path(@laboratory) %>" class="btn btn-primary">Ajouter un Nouveau Examen</a>
+      </div>
+
+      <% if @laboratory.exams.any? %>
+        <div class="row">
+          <% @laboratory.exams.each do |examen| %>
+            <div class="col-md-4 mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title"><%=link_to examen.name, laboratory_exam_path(@laboratory, examen) %></h5>
+                  <p class="card-text"><%= examen.description %></p>
+                  <p class="card-text"><strong>Prix:</strong> <%= examen.price %>FCFA </p>
+                  <div class="mt-4">
+                    <%= link_to 'Modifier', edit_laboratory_exam_path(@laboratory,examen), class: 'btn btn-warning btn-sm' %>
+                    <%= link_to 'Supprimer', laboratory_exam_path(@laboratory, examen), method: :delete, data: { confirm: 'Êtes-vous sûr de vouloir supprimer cet examen ?' }, class: 'btn btn-danger btn-sm' %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p>Aucun examen associé à ce laboratoire.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

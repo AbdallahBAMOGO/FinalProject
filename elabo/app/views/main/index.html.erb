@@ -1,60 +1,179 @@
 <!-- Slider Area -->
 		<section class="slider">
 			<div class="hero-slider">
-				<!-- Start Single Slider -->
-				<div class="single-slider" style="background-image:url('img/slider2.jpg')">
-					<div class="container">
-						<div class="row">
-							<div class="col-lg-7">
-								<div class="text">
-									<h1>We Provide <span>Medical</span> Services That You Can <span>Trust!</span></h1>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl pellentesque, faucibus libero eu, gravida quam. </p>
-									<div class="button">
-										<a href="#" class="btn">Get Appointment</a>
-										<a href="#" class="btn primary">Learn More</a>
-									</div>
+			    <!-- Start Single Slider -->
+			    <div class="single-slider" style="background-image:url(<%= asset_path('frontend/img/slider2.jpg') %>)">
+			        <div class="container">
+			            <div class="row">
+			                <div class="col-lg-7">
+			                    <div class="text">
+			                        <h1>Nous sommes <span>Elabo</span> Pour vous permettre de trouver plus rapidement le <span>laboratoire</span> le plus proche</h1>
+			                        <p>Votre sante est notre priorite. Acceder aux laboratoires de votre region et reservez pour un examen</p>
+			                        <div class="button">
+			                            <a href="#" class="btn">Prendre un Rdv</a>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			    <!-- End Single Slider -->
+
+			    <!-- Start Single Slider -->
+			    <div class="single-slider" style="background-image:url(<%= asset_path('frontend/img/slider.jpg') %>)">
+						<div class="container">
+								<div class="row">
+										<div class="col-lg-7">
+												<div class="text">
+														<h1>Nous sommes <span>Elabo</span> Pour vous permettre de trouver plus rapidement le <span>laboratoire</span> le plus proche</h1>
+														<p>Votre sante est notre priorite. Acceder aux laboratoires de votre region et reservez pour un examen</p>
+														<div class="button">
+																<a href="#" class="btn">Prendre un Rdv</a>
+														</div>
+												</div>
+										</div>
 								</div>
-							</div>
 						</div>
-					</div>
-				</div>
-				<!-- End Single Slider -->
-				<!-- Start Single Slider -->
-				<div class="single-slider" style="background-image:url('img/slider.jpg')">
-					<div class="container">
-						<div class="row">
-							<div class="col-lg-7">
-								<div class="text">
-									<h1>We Provide <span>Medical</span> Services That You Can <span>Trust!</span></h1>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl pellentesque, faucibus libero eu, gravida quam. </p>
-									<div class="button">
-										<a href="#" class="btn">Get Appointment</a>
-										<a href="#" class="btn primary">About Us</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- Start End Slider -->
-				<!-- Start Single Slider -->
-				<div class="single-slider" style="background-image:url('img/slider3.jpg')">
-					<div class="container">
-						<div class="row">
-							<div class="col-lg-7">
-								<div class="text">
-									<h1>We Provide <span>Medical</span> Services That You Can <span>Trust!</span></h1>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl pellentesque, faucibus libero eu, gravida quam. </p>
-									<div class="button">
-										<a href="#" class="btn">Get Appointment</a>
-										<a href="#" class="btn primary">Conatct Now</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- End Single Slider -->
-			</div>
+			    </div>
+			    <!-- End Single Slider -->
+
+			    <!-- Start Single Slider -->
+			    <!-- <div class="single-slider" style="background-image:url(<%= asset_path('frontend/img/slider3.jpg') %>)">
+			        <div class="container">
+			            <div class="row">
+			                <div class="col-lg-7">
+			                    <div class="text">
+			                        <h1>We Provide <span>Medical</span> Services That You Can <span>Trust!</span></h1>
+			                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl pellentesque, faucibus libero eu, gravida quam. </p>
+			                        <div class="button">
+			                            <a href="#" class="btn">Get Appointment</a>
+			                            <a href="#" class="btn primary">Contact Now</a>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div> -->
+			    <!-- End Single Slider -->
+		</div>
+
 		</section>
 		<!--/ End Slider Area -->
+
+
+		<!-- Start Feautes -->
+		<section class="Feautes section">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="section-title">
+							<h2>De meilleurs services pour vous et votre entourage</h2>
+							<%= image_tag 'frontend/img/section-img.png', alt: 'Logo' %>
+							<p>En tant que laborantin ou patient, tous vous trouverez votre compte grace a Elabo</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4 col-12">
+						<!-- Start Single features -->
+						<div class="single-features">
+							<div class="signle-icon">
+								<i class="icofont icofont-ambulance-cross"></i>
+							</div>
+							<h3>En tant que laborantin</h3>
+							<p>Localisez vos laboratoires pour plus de visibilites</p>
+						</div>
+						<!-- End Single features -->
+					</div>
+					<div class="col-lg-4 col-12">
+						<!-- Start Single features -->
+						<div class="single-features">
+							<div class="signle-icon">
+								<i class="icofont icofont-medical-sign-alt"></i>
+							</div>
+							<h3>En tant que patient</h3>
+							<p>Trouvez le labo le plus proche qui offre vos soins.</p>
+						</div>
+						<!-- End Single features -->
+					</div>
+					<div class="col-lg-4 col-12">
+						<!-- Start Single features -->
+						<div class="single-features last">
+							<div class="signle-icon">
+								<i class="icofont icofont-stethoscope"></i>
+							</div>
+							<h3>En tant qu'Investisseur</h3>
+							<p>Investissez dans un laboratoire sans risque avec une etude poussee sur nos donnees</p>
+						</div>
+						<!-- End Single features -->
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--/ End Feautes -->
+
+		<!-- Start Blog Area -->
+		<section class="blog section" id="blog">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="section-title">
+							<h2>Quelques laboratoires</h2>
+							<%= image_tag 'frontend/img/section-img.png', alt: 'Logo' %>
+							<p>Retrouver ici quelques laboratoires</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4 col-md-6 col-12">
+						<!-- Single Blog -->
+						<div class="single-news">
+							<div class="news-head">
+								<%= image_tag 'frontend/img/blog1.jpg', alt: 'Logo' %>
+							</div>
+							<div class="news-body">
+								<div class="news-content">
+									<div class="date">22 Aug, 2020</div>
+									<h2><a href="blog-single.html">Eureka</a></h2>
+									<p class="text">Lorem ipsum dolor a sit ameti, consectetur adipisicing elit, sed do eiusmod tempor incididunt sed do incididunt sed.</p>
+								</div>
+							</div>
+						</div>
+						<!-- End Single Blog -->
+					</div>
+					<div class="col-lg-4 col-md-6 col-12">
+						<!-- Single Blog -->
+						<div class="single-news">
+							<div class="news-head">
+								<%= image_tag 'frontend/img/blog2.jpg', alt: 'Logo' %>
+							</div>
+							<div class="news-body">
+								<div class="news-content">
+									<div class="date">15 Jul, 2020</div>
+									<h2><a href="blog-single.html">Nazounki</a></h2>
+									<p class="text">Lorem ipsum dolor a sit ameti, consectetur adipisicing elit, sed do eiusmod tempor incididunt sed do incididunt sed.</p>
+								</div>
+							</div>
+						</div>
+						<!-- End Single Blog -->
+					</div>
+					<div class="col-lg-4 col-md-6 col-12">
+						<!-- Single Blog -->
+						<div class="single-news">
+							<div class="news-head">
+								<%= image_tag 'frontend/img/blog3.jpg', alt: 'Logo' %>
+							</div>
+							<div class="news-body">
+								<div class="news-content">
+									<div class="date">05 Jan, 2020</div>
+									<h2><a href="blog-single.html">Sante</a></h2>
+									<p class="text">Lorem ipsum dolor a sit ameti, consectetur adipisicing elit, sed do eiusmod tempor incididunt sed do incididunt sed.</p>
+								</div>
+							</div>
+						</div>
+						<!-- End Single Blog -->
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End Blog Area -->

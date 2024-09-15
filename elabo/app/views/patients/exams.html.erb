@@ -1,10 +1,36 @@
-<h1>Liste des examens pour <%= @laboratory.name %></h1>
+<div class="container">
 
-<ul>
-  <% @exams.each do |exam| %>
-    <li>
-      <%= exam.name %> - <%= number_to_currency(exam.price) %>
-      <%= link_to 'Réserver cet examen', new_appointment_path(exam_id: exam.id) %>
-    </li>
-  <% end %>
-</ul>
+  <h1>Liste des examens pour <%= @laboratory.name %></h1>
+
+  <!-- Carte pour afficher les détails du laboratoire -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5 class="mb-0">Détails du laboratoire</h5>
+    </div>
+    <div class="card-body">
+      <p><strong>Adresse :</strong> <%= @laboratory.address %></p>
+      <p><strong>Ville :</strong> <%= @laboratory.city %></p>
+      <p><strong>Email :</strong> <%= @laboratory.email %></p>
+      <!-- Ajoutez d'autres détails du laboratoire ici si nécessaire -->
+    </div>
+  </div>
+
+  <!-- Liste des examens -->
+  <h2>Examens proposés</h2>
+  <div class="row">
+    <% @exams.each do |exam| %>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="mb-0"><%= exam.name %></h5>
+          </div>
+          <div class="card-body">
+            <p>Prix : <%= number_to_currency(exam.price) %></p>
+            <%= link_to 'Réserver cet examen', new_laboratory_exam_appointment_path( @laboratory, exam), class: 'btn btn-primary' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+</div>

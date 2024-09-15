@@ -2,10 +2,10 @@
   <div class="card">
     <div class="card-body">
 
-      <h2 class="card-title text-center">Créer un nouveau laboratoire</h2>
+      <h2 class="card-title text-center">Mettre à jour le laboratoire</h2>
       <div class="row">
         <div class="col-lg-6 col-md-6">
-          <%= form_with model: @laboratory, url: laboratories_path, method: :post do |f| %>
+          <%= form_with model: @laboratory, local: true do |f| %>
             <div class="form-group">
               <%= f.label :name, 'Nom du laboratoire' %>
               <%= f.text_field :name, class: 'form-control' %>
@@ -26,7 +26,6 @@
               <%= f.email_field :email, class: 'form-control' %>
             </div>
 
-            <!-- Champs latitude et longitude (utilisés par la carte) -->
             <div class="form-group">
               <%= f.label :latitude, 'Latitude' %>
               <%= f.text_field :latitude, class: 'form-control', id: 'latitude', readonly: true %>
@@ -38,12 +37,11 @@
             </div>
 
             <div class="form-group text-center">
-              <%= f.submit 'Créer le laboratoire', class: 'btn btn-primary' %>
+              <%= f.submit 'Mettre à jour le laboratoire', class: 'btn btn-primary' %>
             </div>
           <% end %>
         </div>
         <div class="col-lg-6 col-md-6">
-          <!-- Carte Leaflet pour sélectionner la latitude et la longitude -->
           <div id="map" style="height: 300px; margin-bottom: 20px;"></div>
         </div>
       </div>
@@ -53,24 +51,20 @@
 
 <script>
   // Initialiser la carte
-  var map = L.map('map').setView([14.692, -17.446], 13); // Coordonnées par défaut (Dakar)
+  var map = L.map('map').setView([<%= @laboratory.latitude || 14.692 %>, <%= @laboratory.longitude || -17.446 %>], 13);
 
-  // Ajouter les tuiles OpenStreetMap
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  // Créer un marqueur qui peut être déplacé
-  var marker = L.marker([14.692, -17.446], {draggable: true}).addTo(map);
+  var marker = L.marker([<%= @laboratory.latitude || 14.692 %>, <%= @laboratory.longitude || -17.446 %>], {draggable: true}).addTo(map);
 
-  // Mettre à jour les champs de latitude et de longitude lorsque le marqueur est déplacé
   marker.on('dragend', function (e) {
     var position = marker.getLatLng();
     document.getElementById('latitude').value = position.lat;
     document.getElementById('longitude').value = position.lng;
   });
 
-  // Mettre à jour les champs de latitude et longitude lorsque l'utilisateur clique sur la carte
   map.on('click', function(e) {
     var lat = e.latlng.lat;
     var lng = e.latlng.lng;

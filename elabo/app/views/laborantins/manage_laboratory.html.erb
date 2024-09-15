@@ -7,4 +7,31 @@
   <% end %>
 </ul>
 
-<%= link_to 'Ajouter un nouvel examen', new_exam_path(laboratory_id: @laboratory.id) %>
+<%= link_to 'Ajouter un nouvel examen', new_laboratory_exam_path(laboratory_id: @laboratory.id) %>
+
+
+<!-- <h1>Gérer mes laboratoires</h1>
+
+<%= link_to 'Créer un nouveau laboratoire', new_laboratory_path, class: 'btn btn-primary mb-4' %>
+
+<div class="row">
+  <% @laboratories.each do |laboratory| %>
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title"><%= laboratory.name %></h5>
+          <p class="card-text">
+            <strong>Adresse :</strong> <%= laboratory.address %><br>
+            <strong>Ville :</strong> <%= laboratory.city %><br>
+            <strong>Email :</strong> <%= laboratory.email %>
+          </p>
+
+          <!-- Liens pour gérer le laboratoire (Modifier, Supprimer) -->
+          <%= link_to 'Voir les examens', laboratory_exams_path(laboratory), class: 'btn btn-outline-primary' %> <!-- Lien mis à jour -->
+          <%= link_to 'Modifier', edit_laboratory_path(laboratory), class: 'btn btn-outline-secondary' %>
+          <%= link_to 'Supprimer', laboratory,data: { turbo: false, confirm: 'Êtes-vous sûr ?' }, class: 'btn btn-outline-danger' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div> -->

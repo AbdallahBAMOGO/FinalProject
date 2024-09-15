@@ -1,0 +1,28 @@
+<h1>Mes Réservations</h1>
+
+<div class="card-deck">
+  <% @appointments.each do |appointment| %>
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Réservation pour <%= appointment.exam.nom %></h5>
+        <p><strong>Patient :</strong> <%= appointment.patient.name %></p> <!-- Nom du patient -->
+        <p><strong>Date :</strong> <%= appointment.date.strftime("%d/%m/%Y à %H:%M") %></p>
+        <p><strong>Status :</strong> <%= appointment.status %></p>
+
+        <!-- Détails de la réservation -->
+        <h6>Détails de la réservation :</h6>
+        <ul>
+          <li><strong>Condition Préalable :</strong> <%= appointment.exam.conditionPrealable %></li>
+          <li><strong>Précautions :</strong> <%= appointment.exam.precaution %></li>
+          <li><strong>Montant :</strong> <%= appointment.exam.montant %> €</li>
+        </ul>
+
+        <!-- Actions pour confirmer ou rejeter la réservation -->
+        <div class="mt-3">
+          <%= link_to 'Confirmer', confirm_appointment_path(appointment), method: :patch, class: 'btn btn-success', data: { confirm: 'Êtes-vous sûr de vouloir confirmer cette réservation ?' } %>
+          <%= link_to 'Rejeter', reject_appointment_path(appointment), method: :delete, data: { confirm: 'Êtes-vous sûr de vouloir rejeter cette réservation ?' }, class: 'btn btn-danger' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

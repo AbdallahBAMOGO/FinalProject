@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include Rails.application.routes.url_helpers
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected
@@ -9,12 +10,11 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    if current_user.laborantin?
-      manage_laboratories_path # Rediriger vers la gestion des laboratoires
-    elsif current_user.patient?
-      patient_dashboard_path # Rediriger vers la page des rendez-vous
+    print "User type: #{resource.user_type}"
+    if resource.laborantin?
+      laborantin_dashboard_path# Assurez-vous que ce chemin est accessible
     else
-      root_path
+      super # Pour d'autres types d'utilisateurs
     end
   end
 end
